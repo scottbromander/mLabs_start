@@ -9,7 +9,7 @@ var employees = require("./routes/employee");
 
 //Database Variables
 var mongoose = require("mongoose");
-var mongoURI = "mongodb://localhost:27017/market";
+var mongoURI = "mongodb://localhost:27017/company";
 var MongoDB = mongoose.connect(mongoURI).connection;
 
 //If there is an error connecting to the database, let us know!
@@ -27,7 +27,7 @@ app.set("port", (process.env.PORT || 5000));
 
 //Middleware hookups
 app.use(bodyParser.urlencoded({extended: true}));
-app.use(express.static("/server/public/"));
+app.use(express.static("./server/public/"));
 
 //Routes
 app.use("/employees", employees);

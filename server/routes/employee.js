@@ -6,7 +6,8 @@ var mongoose = require("mongoose");
 var EmployeeSchema = mongoose.Schema({
   name : String,
   position: String,
-  salary: Number
+  salary: Number,
+  status: Boolean
 });
 
 /*
@@ -34,6 +35,7 @@ router.post("/", function(req,res){
   employee.name = req.body.name;
   employee.position = req.body.position;
   employee.salary = req.body.salary;
+  employee.status = true;
   employee.save(function(err, savedEmployee){
     if(err){
       console.log(err);
@@ -75,6 +77,29 @@ router.delete("/", function(req,res){
     }
 
     res.send(deletedEmployee);
+  });
+});
+
+router.put("/", function(req,res){
+  var employee = req.body;
+  Employees.findById(employee.id, function(err, foundEmployee){
+      if(err){
+        console.log(err);
+        res.sendStatus(500);
+      }
+
+      // foundEmployee.name = req.body.name;
+      // foundEmployee.position = req.body.position;
+      // foundEmployee.salary = req.body.salary;
+      foundEmployee.status = !foundEmployee.status;
+      foundEmployee.save(function(err, savedEmployee){
+        if(err){
+          console.log(err);
+          res.sendStatus(500);
+        }
+
+        res.send(savedEmployee);
+      });
   });
 });
 
